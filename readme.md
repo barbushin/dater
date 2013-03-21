@@ -36,7 +36,7 @@ All [date()](http://php.net/date) format options available and can be overrided 
 	
 	$dater->setLocale(new Dater_Locale_Russian());
 	echo $dater->date(); // 21.03.2013
-	echo $dater->now('j F Y'); // 21 ����� 2013
+	echo $dater->now('j F Y'); // 21 марта 2013
 	
 ### Standard server & user format methods
 
