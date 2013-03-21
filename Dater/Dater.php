@@ -40,6 +40,7 @@ class Dater {
 		$this->setLocale($locale);
 		$this->setServerTimezone($serverTimezone ? : date_default_timezone_get());
 		$this->setClientTimezone($clientTimezone ? : $this->serverTimezone);
+		$this->initCustomFormatOptions();
 	}
 
 	/**
@@ -60,13 +61,13 @@ class Dater {
 	protected function initCustomFormatOptions() {
 		$dater = $this;
 		$this->addFormatOption('F', function (DateTime $dateTime) use ($dater) {
-			return $dater->locale->getMonth($dateTime->format('n') - 1);
+			return $dater->getLocale()->getMonth($dateTime->format('n') - 1);
 		});
 		$this->addFormatOption('l', function (DateTime $dateTime) use ($dater) {
-			return $dater->locale->getMonth($dateTime->format('N') - 1);
+			return $dater->getLocale()->getMonth($dateTime->format('N') - 1);
 		});
 		$this->addFormatOption('D', function (DateTime $dateTime) use ($dater) {
-			return $dater->locale->getWeekDayShort($dateTime->format('N') - 1);
+			return $dater->getLocale()->getWeekDayShort($dateTime->format('N') - 1);
 		});
 	}
 

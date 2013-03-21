@@ -32,29 +32,26 @@ echo 'Set client timezone: ' . $dater->getClientTimezone() . PHP_EOL;
 echo 'Server datetime: ' . $dater->serverDateTime() . PHP_EOL;
 echo 'Client datetime: ' . $dater->clientDateTime() . PHP_EOL;
 
-echo '<h2>User formats & locales</h2>';
+echo '<h2>Locales</h2>';
 
 $dater->setLocale(new Dater_Locale_English());
 echo 'Set locale: : ' . get_class($dater->getLocale()) . PHP_EOL;
 echo 'User date: ' . $dater->date() . PHP_EOL;
-echo 'User time: ' . $dater->time() . PHP_EOL;
-echo 'User datetime: ' . $dater->datetime() . PHP_EOL . PHP_EOL;
+echo 'User formatted date: ' . $dater->now('j F Y') . PHP_EOL . PHP_EOL;
 
 $dater->setLocale(new Dater_Locale_Russian());
 echo 'Set locale: : ' . get_class($dater->getLocale()) . PHP_EOL;
 echo 'User date: ' . $dater->date() . PHP_EOL;
-echo 'User time: ' . $dater->time() . PHP_EOL;
-echo 'User datetime: ' . $dater->datetime() . PHP_EOL . PHP_EOL;
+echo 'User formatted date: ' . $dater->now('j F Y') . PHP_EOL . PHP_EOL;
 
-$dater->setLocale(new Dater_Locale_English());
-echo 'Set locale: ' . get_class($dater->getLocale()) . PHP_EOL;
+echo '<h2>Formats binding</h2>';
 
 echo 'User date: ' . $dater->date() . PHP_EOL;
-echo 'Set user date format as "d F Y"' . PHP_EOL;
+echo 'Set "date" format as "d F Y"' . PHP_EOL;
 $dater->setFormat(Dater::USER_DATE_FORMAT, 'd F Y');
 echo 'User date: ' . $dater->date() . PHP_EOL;
 
-echo 'Set new user "week_date" format as "d F, D"' . PHP_EOL;
+echo 'Set new "week_date" format as "d F, D"' . PHP_EOL;
 $dater->setFormat('week_date', 'd F, D');
 echo 'User week_date: ' . $dater->format($weekAgoDateTime, 'week_date') . PHP_EOL;
 
@@ -69,22 +66,12 @@ echo 'So again, lets bind "d F Y, ago" format to alias "week_date_ago"' . PHP_EO
 $dater->setFormat('week_date_ago', 'd F Y, ago');
 echo 'User week ago date in format "week_date_ago": ' . $dater->format($weekAgoDateTime, 'week_date_ago') . PHP_EOL;
 
-echo '<h2>Convert client request datetime data to server timezone</h2>';
+echo '<h2>Convert request datetime to server timezone</h2>';
 echo 'Server timezone: ' . $dater->getServerTimezone() . PHP_EOL;
 echo 'Client timezone: ' . $dater->getClientTimezone() . PHP_EOL;
 
-$_GET = array(
-	'filter' => array(
-		'startsFrom' => $weekAgoDateTime,
-	)
-);
-
-$_POST = array(
-	'event' => array(
-		'starts' => $weekAgoDateTime,
-	)
-);
-
+$_GET = array('filter' => array('startsFrom' => $weekAgoDateTime));
+$_POST = array('event' => array('starts' => $weekAgoDateTime));
 $_REQUEST = array_merge($_GET, $_POST);
 
 echo 'Client original request data: ' . PHP_EOL;
