@@ -10,8 +10,8 @@
  */
 class Dater_TimezoneDetector {
 
-	protected $clientTimezone;
 	protected $cookieName;
+	protected $clientTimezone;
 
 	public function __construct($cookieName = 'dater_timezone') {
 		$this->cookieName = $cookieName;
