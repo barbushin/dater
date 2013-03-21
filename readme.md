@@ -1,6 +1,6 @@
 # About
 
-This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones.
+This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones. PHP > 5.3 required.
 
 # Features
 
