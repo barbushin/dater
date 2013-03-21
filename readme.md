@@ -4,7 +4,7 @@ This library can be very helpful to standardize date-time formats in your projec
 
 # Features
 
-PHP > 5.3 required. For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php).
+For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php). PHP > 5.3 required
 
 ### Timestamp/datetime input formats support
 
