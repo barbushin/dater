@@ -1,11 +1,10 @@
 # About
 
 This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones. 
-PHP > 5.3 required.
 
 # Features
 
-For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php).
+PHP > 5.3 required. For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php).
 
 ### Timestamp/datetime input formats support
 
