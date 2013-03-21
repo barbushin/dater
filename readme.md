@@ -1,13 +1,14 @@
 # About
 
-This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones.
+This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones. 
 
 # Features
 
-For all features using example see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php).
+For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php). PHP > 5.3 required
 
 ### Timestamp/datetime input formats support
 
+	$dater = new Dater(Dater_Locale_English());
 	echo $dater->datetime();
 	echo $dater->datetime(time());
 	echo $dater->datetime(date('Y-m-d H:i:s'));
@@ -35,7 +36,7 @@ All [date()](http://php.net/date) format options available and can be overrided 
 	
 	$dater->setLocale(new Dater_Locale_Russian());
 	echo $dater->date(); // 21.03.2013
-	echo $dater->now('j F Y'); // 21 ìàðòà 2013
+	echo $dater->now('j F Y'); // 21 Ð¼Ð°Ñ€Ñ‚Ð° 2013
 	
 ### Standard server & user format methods
 

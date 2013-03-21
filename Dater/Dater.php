@@ -51,7 +51,6 @@ class Dater {
 	}
 
 	public function setLocale(Dater_Locale $locale) {
-		/** @var $formats array */ // TODO: remove on commit
 		foreach($locale::$formats as $alias => $format) {
 			$this->setFormat($alias, $format);
 		}
