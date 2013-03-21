@@ -4,7 +4,7 @@ This library can be very helpful to standardize date-time formats in your projec
 
 # Features
 
-For all features using example see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php).
+For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php).
 
 ### Timestamp/datetime input formats support
 
@@ -35,7 +35,7 @@ All [date()](http://php.net/date) format options available and can be overrided 
 	
 	$dater->setLocale(new Dater_Locale_Russian());
 	echo $dater->date(); // 21.03.2013
-	echo $dater->now('j F Y'); // 21 марта 2013
+	echo $dater->now('j F Y'); // 21 пїЅпїЅпїЅпїЅпїЅ 2013
 	
 ### Standard server & user format methods
 
