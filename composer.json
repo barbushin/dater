@@ -1,0 +1,21 @@
+{
+    "name": "dater/dater",
+    "description": "Compact PHP library for working with date/time in different formats & timezones.",
+    "keywords": ["PHP","date","timezone","datetime","time"],
+    "homepage": "https://github.com/barbushin/dater",
+	"license": "BSD 3-Clause",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Sergey Barbushin",
+            "homepage": "http://linkedin.com/in/barbushin",
+            "email": "barbushin@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "files": [ "Dater/__autoload.php" ]
+    }
+}
