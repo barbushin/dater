@@ -235,7 +235,7 @@ class Dater {
 	 * @param string|int|null $serverDateTimeOrTimestamp
 	 * @return string
 	 */
-	function serverDate($serverDateTimeOrTimestamp = null) {
+	public function serverDate($serverDateTimeOrTimestamp = null) {
 		return $this->format($serverDateTimeOrTimestamp, self::SERVER_DATE_FORMAT, $this->serverTimezone);
 	}
 
@@ -244,7 +244,7 @@ class Dater {
 	 * @param string|int|null $serverDateTimeOrTimestamp
 	 * @return string
 	 */
-	function serverTime($serverDateTimeOrTimestamp = null) {
+	public function serverTime($serverDateTimeOrTimestamp = null) {
 		return $this->format($serverDateTimeOrTimestamp, self::SERVER_TIME_FORMAT, $this->serverTimezone);
 	}
 
@@ -253,7 +253,7 @@ class Dater {
 	 * @param null $serverDateTimeOrTimestamp
 	 * @return string
 	 */
-	function serverDateTime($serverDateTimeOrTimestamp = null) {
+	public function serverDateTime($serverDateTimeOrTimestamp = null) {
 		return $this->format($serverDateTimeOrTimestamp, self::SERVER_DATETIME_FORMAT, $this->serverTimezone);
 	}
 
@@ -262,7 +262,7 @@ class Dater {
 	 * @param string|int|null $serverDateTimeOrTimestamp
 	 * @return string
 	 */
-	function clientDate($serverDateTimeOrTimestamp = null) {
+	public function clientDate($serverDateTimeOrTimestamp = null) {
 		return $this->format($serverDateTimeOrTimestamp, self::SERVER_DATE_FORMAT);
 	}
 
@@ -271,7 +271,7 @@ class Dater {
 	 * @param string|int|null $serverDateTimeOrTimestamp
 	 * @return string
 	 */
-	function clientTime($serverDateTimeOrTimestamp = null) {
+	public function clientTime($serverDateTimeOrTimestamp = null) {
 		return $this->format($serverDateTimeOrTimestamp, self::SERVER_TIME_FORMAT);
 	}
 
@@ -280,7 +280,7 @@ class Dater {
 	 * @param null $serverDateTimeOrTimestamp
 	 * @return string
 	 */
-	function clientDateTime($serverDateTimeOrTimestamp = null) {
+	public function clientDateTime($serverDateTimeOrTimestamp = null) {
 		return $this->format($serverDateTimeOrTimestamp, self::SERVER_DATETIME_FORMAT);
 	}
 
