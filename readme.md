@@ -30,7 +30,7 @@ All [date()](http://php.net/date) format options available and can be overrided 
 
 ### Locales support
 
-	$dater->setLocale(new Dater_Locale_English());
+	$dater->setLocale(new Dater_Locale_English()); // or you can use Dater::getLocaleByCode('ru')
 	echo $dater->date(); // 03/21/2013
 	echo $dater->now('j F Y'); // 21 March 2013
 	

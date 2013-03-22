@@ -17,6 +17,12 @@ class Dater {
 	const SERVER_TIME_FORMAT = 'server_time';
 	const SERVER_DATETIME_FORMAT = 'server_datetime';
 
+	protected static $localesCodes = array(
+		'en' => 'English',
+		'ru' => 'Russian',
+		'ua' => 'Ukrainian',
+	);
+
 	protected $formats = array(
 		self::USER_DATE_FORMAT => 'm/d/Y',
 		self::USER_TIME_FORMAT => 'g:i A',
@@ -48,6 +54,21 @@ class Dater {
 	 */
 	public function getLocale() {
 		return $this->locale;
+	}
+
+	/**
+	 * Get locale by 2-chars code: en, ru, ua
+	 * @param $code
+	 * @throws Exception
+	 * @return
+	 */
+	public static function getLocaleByCode($code) {
+		$code = strtolower($code);
+		if(!isset(static::$localesCodes[$code])) {
+			throw new Exception('Unknown locale code "' . $code . '". See available codes in Dater::$localeCodes.');
+		}
+		$class = 'Dater_Locale_' . static::$localesCodes[$code];
+		return new $class();
 	}
 
 	public function setLocale(Dater_Locale $locale) {

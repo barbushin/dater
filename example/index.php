@@ -39,7 +39,7 @@ echo 'Set locale: : ' . get_class($dater->getLocale()) . PHP_EOL;
 echo 'User date: ' . $dater->date() . PHP_EOL;
 echo 'User formatted date: ' . $dater->now('j F Y') . PHP_EOL . PHP_EOL;
 
-$dater->setLocale(new Dater_Locale_Russian());
+$dater->setLocale(Dater::getLocaleByCode('ru'));
 echo 'Set locale: : ' . get_class($dater->getLocale()) . PHP_EOL;
 echo 'User date: ' . $dater->date() . PHP_EOL;
 echo 'User formatted date: ' . $dater->now('j F Y') . PHP_EOL . PHP_EOL;
