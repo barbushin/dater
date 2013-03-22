@@ -84,7 +84,7 @@ class Dater {
 			return $dater->getLocale()->getMonth($dateTime->format('n') - 1);
 		});
 		$this->addFormatOption('l', function (DateTime $dateTime) use ($dater) {
-			return $dater->getLocale()->getMonth($dateTime->format('N') - 1);
+			return $dater->getLocale()->getWeekDay($dateTime->format('N') - 1);
 		});
 		$this->addFormatOption('D', function (DateTime $dateTime) use ($dater) {
 			return $dater->getLocale()->getWeekDayShort($dateTime->format('N') - 1);
