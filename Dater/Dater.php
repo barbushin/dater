@@ -17,7 +17,7 @@ class Dater {
 	const SERVER_TIME_FORMAT = 'server_time';
 	const SERVER_DATETIME_FORMAT = 'server_datetime';
 
-	protected static $localesCodes = array(
+	public static $localesCodes = array(
 		'en' => 'English',
 		'ru' => 'Russian',
 		'ua' => 'Ukrainian',
