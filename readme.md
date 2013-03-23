@@ -53,15 +53,15 @@ All [date()](http://php.net/date) format options available and can be overrided 
 	
 ### Standard server & user format methods
 
-	echo $dater->date(); // 03/21/2013 (depends on locale)
-	echo $dater->time(); // 5:41 AM (depends on locale)
-	echo $dater->datetime(); // 03/21/2013 5:41 (depends on locale)
-	echo $dater->serverDate(); // 2013-03-21
-	echo $dater->serverTime(); // 09:41:28
-	echo $dater->serverDateTime(); // 2013-03-21 09:41:28
-	echo $dater->clientDate(); // 2013-03-21
-	echo $dater->clientTime(); // 05:41:28
-	echo $dater->clientDateTime(); // 2013-03-21 05:41:28
+	echo $dater->date(); // 03/21/2013 (client timezone, depends on locale)
+	echo $dater->time(); // 5:41 AM (client timezone, depends on locale)
+	echo $dater->datetime(); // 03/21/2013 5:41 (client timezone, depends on locale)
+	echo $dater->isoDate(); // 2013-03-21 (client timezone)
+  echo $dater->isoTime(); // 05:41:28 (client timezone)
+  echo $dater->isoDatetime(); // 2013-03-21 05:41:28 (client timezone)
+	echo $dater->serverDate(); // 2013-03-21 (server timezone)
+	echo $dater->serverTime(); // 09:41:28 (server timezone)
+	echo $dater->serverDateTime(); // 2013-03-21 09:41:28 (server timezone)
 
 ### Native PHP DateTime class object init & formatting
 
@@ -76,7 +76,7 @@ All [date()](http://php.net/date) format options available and can be overrided 
 	$dater->setServerTimezone('Europe/Moscow');
 	$dater->setClientTimezone('Europe/London');
 	echo $dater->serverDateTime(); // 2013-03-21 08:18:06
-	echo $dater->clientDateTime(); // 2013-03-21 04:18:06
+	echo $dater->isoDatetime(); // 2013-03-21 04:18:06
 	echo $dater->time(); // 04:18
 	
 ### Timezone auto-detection

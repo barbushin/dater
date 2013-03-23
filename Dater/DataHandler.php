@@ -64,7 +64,7 @@ class Dater_DataHandler {
 		array_walk_recursive($arrayOrObject, function (&$var) use ($dater, $inputTimezone, $outputTimezone) {
 			if(is_scalar($var)) {
 				if(strlen($var) == 19 && preg_match('~^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$~', $var)) {
-					$var = $dater->format($var, Dater::SERVER_DATETIME_FORMAT, $outputTimezone, $inputTimezone);
+					$var = $dater->format($var, Dater::ISO_DATETIME_FORMAT, $outputTimezone, $inputTimezone);
 				}
 			}
 			elseif(is_object($var)) {
@@ -78,11 +78,10 @@ class Dater_DataHandler {
 	}
 
 	/**
-	 * Convert datetime to specified format & to client timezone. Converting patterns:
-	 *
-	 * Replace server datetime format strings like "YYYY-MM-DD HH:II:SS" to $dater->clientDateTime(YYYY-MM-DD HH:II:SS);
-	 * Replace server datetime format strings like "YYYY-MM-DD HH:II:SS[Y-m-d]" to $dater->format(YYYY-MM-DD HH:II:SS, Y-m-d);
-	 * Replace timestamp strings like "1363836570[Y-m-d]" to $dater->format(1363836570, Y-m-d);
+	 * Convert datetime to specified format & client timezone. Converting patterns:
+	 *  "YYYY-MM-DD HH:II:SS" strings to client timezone
+	 *  "YYYY-MM-DD HH:II:SS[Y-m-d]" strings to client timezone in some format
+	 *  "1363836570[Y-m-d]" timestamp strings to client timezone in some format
 	 *
 	 * @param $data
 	 * @return mixed
@@ -91,7 +90,7 @@ class Dater_DataHandler {
 		$dater = $this->dater;
 		$data = preg_replace_callback($this->dataDatetimeRegexps, function ($matches) use ($dater) {
 			if(!empty($matches[1])) {
-				return $dater->format($matches[1], !empty($matches[2]) ? $matches[2] : Dater::SERVER_DATETIME_FORMAT) . (isset($matches[3]) ? $matches[3] : '');
+				return $dater->format($matches[1], !empty($matches[2]) ? $matches[2] : Dater::ISO_DATETIME_FORMAT) . (isset($matches[3]) ? $matches[3] : '');
 			}
 		}, $data);
 		return $data;

@@ -5,8 +5,6 @@ require_once(__DIR__ . '/../Dater/__autoload.php');
 $dater = new Dater(new Dater_Locale_English());
 
 echo '<pre>';
-
-
 echo '<h2>Datetime source type</h2>';
 $weekAgoTimestamp = time() - 60 * 60 * 24 * 7;
 $weekAgoDateTime = date('Y-m-d H:i:s', $weekAgoTimestamp);
@@ -22,16 +20,16 @@ $dater->setClientTimezone('Europe/London');
 echo 'Set server timezone: ' . $dater->getServerTimezone() . PHP_EOL;
 echo 'Set client timezone: ' . $dater->getClientTimezone() . PHP_EOL;
 echo 'Server date: ' . $dater->serverDate() . PHP_EOL;
-echo 'Client date: ' . $dater->clientDate() . PHP_EOL;
+echo 'Client date: ' . $dater->isoDate() . PHP_EOL;
 echo 'Server time: ' . $dater->serverTime() . PHP_EOL;
-echo 'Client time: ' . $dater->clientTime() . PHP_EOL;
+echo 'Client time: ' . $dater->isoTime() . PHP_EOL;
 echo 'Server datetime: ' . $dater->serverDateTime() . PHP_EOL;
-echo 'Client datetime: ' . $dater->clientDateTime() . PHP_EOL;
+echo 'Client datetime: ' . $dater->isoDatetime() . PHP_EOL;
 
 $dater->setClientTimezone('Europe/Minsk');
 echo 'Set client timezone: ' . $dater->getClientTimezone() . PHP_EOL;
 echo 'Server datetime: ' . $dater->serverDateTime() . PHP_EOL;
-echo 'Client datetime: ' . $dater->clientDateTime() . PHP_EOL;
+echo 'Client datetime: ' . $dater->isoDatetime() . PHP_EOL;
 
 
 echo '<h2>DateTime object init & format. Dater::modify() method</h2>';

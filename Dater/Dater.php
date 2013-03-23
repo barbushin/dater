@@ -7,15 +7,23 @@
  * @author Sergey Barbushin http://linkedin.com/in/barbushin
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause License
  * @copyright © Sergey Barbushin, 2013. Some rights reserved.
+ *
+ * All this methods works through Dater::__call method, mapped to format date with Dater::$formats[METHOD_NAME] format:
+ * @method date($dateTimeOrTimestamp = null) Get date in Dater::$formats['date'] format, in client timezone
+ * @method time($dateTimeOrTimestamp = null) Get date in Dater::$formats['time'] format, in client timezone
+ * @method datetime($dateTimeOrTimestamp = null) Get date in Dater::$formats['datetime'] format, in client timezone
+ * @method isoDate($dateTimeOrTimestamp = null) Get date in Dater::$formats['isoDate'] format, in client timezone
+ * @method isoTime($dateTimeOrTimestamp = null) Get date in Dater::$formats['isoTime'] format, in client timezone
+ * @method isoDatetime($dateTimeOrTimestamp = null) Get date in Dater::$formats['isoDatetime'] format, in client timezone
  */
 class Dater {
 
 	const USER_DATE_FORMAT = 'date';
 	const USER_TIME_FORMAT = 'time';
 	const USER_DATETIME_FORMAT = 'datetime';
-	const SERVER_DATE_FORMAT = 'server_date';
-	const SERVER_TIME_FORMAT = 'server_time';
-	const SERVER_DATETIME_FORMAT = 'server_datetime';
+	const ISO_DATE_FORMAT = 'isoDate';
+	const ISO_TIME_FORMAT = 'isoTime';
+	const ISO_DATETIME_FORMAT = 'isoDatetime';
 
 	public static $localesCodes = array(
 		'en' => 'English',
@@ -27,9 +35,9 @@ class Dater {
 		self::USER_DATE_FORMAT => 'm/d/Y',
 		self::USER_TIME_FORMAT => 'g:i A',
 		self::USER_DATETIME_FORMAT => 'm/d/Y g:i A',
-		self::SERVER_DATE_FORMAT => 'Y-m-d',
-		self::SERVER_TIME_FORMAT => 'H:i:s',
-		self::SERVER_DATETIME_FORMAT => 'Y-m-d H:i:s',
+		self::ISO_DATE_FORMAT => 'Y-m-d',
+		self::ISO_TIME_FORMAT => 'H:i:s',
+		self::ISO_DATETIME_FORMAT => 'Y-m-d H:i:s',
 	);
 
 	/** @var Dater_Locale */
@@ -146,33 +154,6 @@ class Dater {
 	}
 
 	/**
-	 * Get date in Dater::$formats['date'] format, in client timezone
-	 * @param string|int|null $serverDateTimeOrTimestamp Default value current timestamp
-	 * @return string
-	 */
-	public function date($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, static::USER_DATE_FORMAT);
-	}
-
-	/**
-	 * Get time in Dater::$timeFormat format, in client timezone
-	 * @param string|int|null $serverDateTimeOrTimestamp Default value current timestamp
-	 * @return string
-	 */
-	public function time($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, static::USER_TIME_FORMAT);
-	}
-
-	/**
-	 * Get datetime in Dater::$formats[datetime] format, in client timezone
-	 * @param string|int|null $serverDateTimeOrTimestamp Default value current timestamp
-	 * @return string
-	 */
-	public function datetime($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, static::USER_DATETIME_FORMAT);
-	}
-
-	/**
 	 * Format current datetime to specified format with timezone converting
 	 * @param string|null $format http://php.net/date format or format name
 	 * @param string|null $outputTimezone Default value is Dater::$clientTimezone
@@ -253,13 +234,13 @@ class Dater {
 	/**
 	 * @param $dateTimeOrTimestamp
 	 * @param string $modify Modification string as in http://php.net/date_modify
-	 * @param string|null $format http://php.net/date format or format name. Default value is Dater::SERVER_DATETIME_FORMAT
+	 * @param string|null $format http://php.net/date format or format name. Default value is Dater::ISO_DATETIME_FORMAT
 	 * @param string|null $outputTimezone Default value is Dater::$serverTimezone
 	 * @param string|null $inputTimezone Default value is Dater::$serverTimezone
 	 * @return string
 	 */
 	public function modify($dateTimeOrTimestamp, $modify, $format = null, $outputTimezone = null, $inputTimezone = null) {
-		$format = $format ? : self::SERVER_DATETIME_FORMAT;
+		$format = $format ? : self::ISO_DATETIME_FORMAT;
 		$outputTimezone = $outputTimezone ? : $this->serverTimezone;
 		$inputTimezone = $inputTimezone ? : $this->serverTimezone;
 		$dateTime = $this->initDateTime($dateTimeOrTimestamp, $inputTimezone, $outputTimezone);
@@ -273,7 +254,7 @@ class Dater {
 	 * @return string
 	 */
 	public function serverDate($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::SERVER_DATE_FORMAT, $this->serverTimezone);
+		return $this->format($serverDateTimeOrTimestamp, self::ISO_DATE_FORMAT, $this->serverTimezone);
 	}
 
 	/**
@@ -282,7 +263,7 @@ class Dater {
 	 * @return string
 	 */
 	public function serverTime($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::SERVER_TIME_FORMAT, $this->serverTimezone);
+		return $this->format($serverDateTimeOrTimestamp, self::ISO_TIME_FORMAT, $this->serverTimezone);
 	}
 
 	/**
@@ -291,34 +272,7 @@ class Dater {
 	 * @return string
 	 */
 	public function serverDateTime($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::SERVER_DATETIME_FORMAT, $this->serverTimezone);
-	}
-
-	/**
-	 * Get date in YYYY-MM-DD format, in client timezone
-	 * @param string|int|null $serverDateTimeOrTimestamp
-	 * @return string
-	 */
-	public function clientDate($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::SERVER_DATE_FORMAT);
-	}
-
-	/**
-	 * Get date in HH-II-SS format, in client timezone
-	 * @param string|int|null $serverDateTimeOrTimestamp
-	 * @return string
-	 */
-	public function clientTime($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::SERVER_TIME_FORMAT);
-	}
-
-	/**
-	 * Get datetime in YYYY-MM-DD HH:II:SS format, in client timezone
-	 * @param null $serverDateTimeOrTimestamp
-	 * @return string
-	 */
-	public function clientDateTime($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::SERVER_DATETIME_FORMAT);
+		return $this->format($serverDateTimeOrTimestamp, self::ISO_DATETIME_FORMAT, $this->serverTimezone);
 	}
 
 	public function setFormat($alias, $format) {
@@ -350,7 +304,7 @@ class Dater {
 	 *   $dater->addFormat('shortDate', 'd/m')
 	 *   echo $dater->shortDate(time());
 	 * To annotate available formats-methods just add to Dater class annotations like:
-	 *   @method int|string|null shortDate $dateTimeOrTimestamp
+	 *   @method shortDate($dateTimeOrTimestamp = null)
 	 *
 	 * @param $formatAlias
 	 * @param array $dateTimeOrTimestampArg
@@ -360,7 +314,7 @@ class Dater {
 	public function __call($formatAlias, array $dateTimeOrTimestampArg) {
 		$formatAlias = $this->getFormat($formatAlias);
 		if(!$formatAlias) {
-			throw new Exception('There is no method or format name with name "' . $formatAlias . '"');
+			throw new Exception('There is no method or format with name "' . $formatAlias . '"');
 		}
 		return $this->format(reset($dateTimeOrTimestampArg), $formatAlias);
 	}
