@@ -11,23 +11,39 @@
 abstract class Dater_Locale {
 
 	/** @var array */
-	public static $months;
+	protected static $months;
 	/** @var array */
-	public static $weekDays;
+	protected static $weekDays;
 	/** @var array */
-	public static $weekDaysShort;
+	protected static $weekDaysShort;
 	/** @var array */
-	public static $formats;
+	protected static $formats;
+
+	public static function getFormats() {
+		return static::$formats;
+	}
 
 	public static function getMonth($index) {
 		return static::$months[$index];
+	}
+
+	public static function getMonths() {
+		return static::$months;
 	}
 
 	public static function getWeekDay($index) {
 		return static::$weekDays[$index];
 	}
 
+	public static function getWeekDays() {
+		return static::$weekDays;
+	}
+
 	public static function getWeekDayShort($index) {
 		return static::$weekDaysShort[$index];
+	}
+
+	public static function getWeekDaysShort() {
+		return static::$weekDaysShort;
 	}
 }

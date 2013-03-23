@@ -25,12 +25,6 @@ class Dater {
 	const ISO_TIME_FORMAT = 'isoTime';
 	const ISO_DATETIME_FORMAT = 'isoDatetime';
 
-	public static $localesCodes = array(
-		'en' => 'English',
-		'ru' => 'Russian',
-		'ua' => 'Ukrainian',
-	);
-
 	protected $formats = array(
 		self::USER_DATE_FORMAT => 'm/d/Y',
 		self::USER_TIME_FORMAT => 'g:i A',
@@ -65,22 +59,22 @@ class Dater {
 	}
 
 	/**
-	 * Get locale by 2-chars code: en, ru, ua
-	 * @param $code
+	 * Get locale by language & country code. See available locales in /Dater/Locale/*
+	 * @param string $languageCode
+	 * @param null $countryCode
 	 * @throws Exception
 	 * @return
 	 */
-	public static function getLocaleByCode($code) {
-		$code = strtolower($code);
-		if(!isset(static::$localesCodes[$code])) {
-			throw new Exception('Unknown locale code "' . $code . '". See available codes in Dater::$localeCodes.');
+	public static function getLocaleByCode($languageCode, $countryCode = null) {
+		$class = 'Dater_Locale_' . ucfirst(strtolower($languageCode)) . ($countryCode ? ucfirst(strtolower($countryCode)) : '');
+		if(!class_exists($class)) {
+			throw new Exception('Unknown locale code. Class "' . $class . '" not found.');
 		}
-		$class = 'Dater_Locale_' . static::$localesCodes[$code];
 		return new $class();
 	}
 
 	public function setLocale(Dater_Locale $locale) {
-		foreach($locale::$formats as $alias => $format) {
+		foreach($locale::getFormats() as $alias => $format) {
 			$this->setFormat($alias, $format);
 		}
 		$this->locale = $locale;

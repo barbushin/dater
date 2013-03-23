@@ -21,7 +21,7 @@ For all features using examples see [/example/index.php](https://github.com/barb
 
 ### Timestamp/datetime input formats support
 
-	$dater = new Dater(Dater_Locale_English());
+	$dater = new Dater(Dater_Locale_En());
 	echo $dater->datetime();
 	echo $dater->datetime(time());
 	echo $dater->datetime(date('Y-m-d H:i:s'));
@@ -43,11 +43,11 @@ All [date()](http://php.net/date) format options available and can be overrided 
 
 ### Locales support
 
-	$dater->setLocale(new Dater_Locale_English()); // or you can use Dater::getLocaleByCode('ru')
+	$dater->setLocale(new Dater_Locale_En()); // or you can use Dater::getLocaleByCode('ru')
 	echo $dater->date(); // 03/21/2013
 	echo $dater->now('j F Y'); // 21 March 2013
 	
-	$dater->setLocale(new Dater_Locale_Russian());
+	$dater->setLocale(new Dater_Locale_Ru());
 	echo $dater->date(); // 21.03.2013
 	echo $dater->now('j F Y'); // 21 марта 2013
 	
