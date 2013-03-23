@@ -2,6 +2,19 @@
 
 This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones. 
 
+# Install
+
+The recommended way to install Dater is [through composer](http://getcomposer.org).
+You can see [package information on Packagist.](https://packagist.org/packages/dater/dater)
+
+```JSON
+{
+	"require": {
+		"dater/dater": "dev-master"
+	}
+}
+```
+
 # Features
 
 For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php). PHP > 5.3 required
