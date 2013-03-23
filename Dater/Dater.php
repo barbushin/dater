@@ -344,21 +344,24 @@ class Dater {
 	}
 
 	/**
-	 * Magic call of $dater->formatFORMAT($dateTimeOrTimestamp). To annotate available formats-methods just add to class annotations:
+	 * Magic call of $dater->format($dateTimeOrTimestamp, $formatAlias).
 	 *
 	 * Example:
-	 * @method string time $dateTimeOrTimestamp
+	 *   $dater->addFormat('shortDate', 'd/m')
+	 *   echo $dater->shortDate(time());
+	 * To annotate available formats-methods just add to Dater class annotations like:
+	 *   @method int|string|null shortDate $dateTimeOrTimestamp
 	 *
-	 * @param $formatFORMAT
-	 * @param array $dateTimeArg
+	 * @param $formatAlias
+	 * @param array $dateTimeOrTimestampArg
 	 * @return string
 	 * @throws Exception
 	 */
-	public function __call($formatFORMAT, array $dateTimeArg) {
-		$format = $this->getFormat($formatFORMAT);
-		if(!$format) {
-			throw new Exception('There is no method or format name with name "' . $formatFORMAT . '"');
+	public function __call($formatAlias, array $dateTimeOrTimestampArg) {
+		$formatAlias = $this->getFormat($formatAlias);
+		if(!$formatAlias) {
+			throw new Exception('There is no method or format name with name "' . $formatAlias . '"');
 		}
-		return $this->format(reset($dateTimeArg), $format);
+		return $this->format(reset($dateTimeOrTimestampArg), $formatAlias);
 	}
 }
