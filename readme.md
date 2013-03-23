@@ -4,7 +4,7 @@ This library can be very helpful to standardize date-time formats in your projec
 
 # Install
 
-The recommended way to install Dater is [through composer](http://getcomposer.org).
+The recommended way to install Dater is through [Composer](http://getcomposer.org).
 You can see [package information on Packagist.](https://packagist.org/packages/dater/dater)
 
 ```JSON
