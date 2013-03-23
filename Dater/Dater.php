@@ -174,7 +174,7 @@ class Dater {
 
 	/**
 	 * Format current datetime to specified format with timezone converting
-	 * @param string|null $format http://php.net/date format or format FORMAT
+	 * @param string|null $format http://php.net/date format or format name
 	 * @param string|null $outputTimezone Default value is Dater::$clientTimezone
 	 * @return string
 	 */
@@ -183,16 +183,13 @@ class Dater {
 	}
 
 	/**
-	 * Format date/datetime/timestamp to specified format with timezone converting
-	 * @param string|int|null $dateTimeOrTimestamp Default value current timestamp
-	 * @param string|null $format http://php.net/date format or format FORMAT
-	 * @param string|null $outputTimezone Default value is Dater::$clientTimezone
-	 * @param string|null $inputTimezone Default value is Dater::$serverTimezone
-	 * @return string
+	 * Init standard DateTime object configured to outputTimezone corresponding to inputTimezone
+	 * @param null $dateTimeOrTimestamp
+	 * @param null $inputTimezone
+	 * @param null $outputTimezone
+	 * @return \DateTime
 	 */
-	public function format($dateTimeOrTimestamp, $format, $outputTimezone = null, $inputTimezone = null) {
-		$format = $this->getFormat($format) ? : $format;
-
+	public function initDateTime($dateTimeOrTimestamp = null, $inputTimezone = null, $outputTimezone = null) {
 		if(!$inputTimezone) {
 			$inputTimezone = $this->serverTimezone;
 		}
@@ -220,14 +217,54 @@ class Dater {
 		if(!$isDate && $outputTimezone && $outputTimezone != $inputTimezone) {
 			$dateTime->setTimezone($this->getTimezoneObject($outputTimezone));
 		}
+		return $dateTime;
+	}
 
+	/**
+	 * Format DateTime object to http://php.net/date format or format name
+	 * @param DateTime $dateTime
+	 * @param $format
+	 * @return string
+	 */
+	public function formatDateTime(DateTime $dateTime, $format) {
+		$format = $this->getFormat($format) ? : $format;
 		$isStashed = $this->stashCustomFormatOptions($format);
 		$result = $dateTime->format($format);
 		if($isStashed) {
 			$this->applyCustomFormatOptions($result, $dateTime);
 		}
-
 		return $result;
+	}
+
+	/**
+	 * Format date/datetime/timestamp to specified format with timezone converting
+	 * @param string|int|null $dateTimeOrTimestamp Default value current timestamp
+	 * @param string|null $format http://php.net/date format or format name. Default value is current
+	 * @param string|null $outputTimezone Default value is Dater::$clientTimezone
+	 * @param string|null $inputTimezone Default value is Dater::$serverTimezone
+	 * @return string
+	 */
+	public function format($dateTimeOrTimestamp, $format, $outputTimezone = null, $inputTimezone = null) {
+		$dateTime = $this->initDateTime($dateTimeOrTimestamp, $inputTimezone, $outputTimezone);
+		$result = $this->formatDateTime($dateTime, $format);
+		return $result;
+	}
+
+	/**
+	 * @param $dateTimeOrTimestamp
+	 * @param string $modify Modification string as in http://php.net/date_modify
+	 * @param string|null $format http://php.net/date format or format name. Default value is Dater::SERVER_DATETIME_FORMAT
+	 * @param string|null $outputTimezone Default value is Dater::$serverTimezone
+	 * @param string|null $inputTimezone Default value is Dater::$serverTimezone
+	 * @return string
+	 */
+	public function modify($dateTimeOrTimestamp, $modify, $format = null, $outputTimezone = null, $inputTimezone = null) {
+		$format = $format ? : self::SERVER_DATETIME_FORMAT;
+		$outputTimezone = $outputTimezone ? : $this->serverTimezone;
+		$inputTimezone = $inputTimezone ? : $this->serverTimezone;
+		$dateTime = $this->initDateTime($dateTimeOrTimestamp, $inputTimezone, $outputTimezone);
+		$dateTime->modify($modify);
+		return $this->formatDateTime($dateTime, $format);
 	}
 
 	/**
@@ -320,9 +357,8 @@ class Dater {
 	public function __call($formatFORMAT, array $dateTimeArg) {
 		$format = $this->getFormat($formatFORMAT);
 		if(!$format) {
-			throw new Exception('There is no method or format FORMAT with name "' . $formatFORMAT . '"');
+			throw new Exception('There is no method or format name with name "' . $formatFORMAT . '"');
 		}
 		return $this->format(reset($dateTimeArg), $format);
 	}
 }
-
