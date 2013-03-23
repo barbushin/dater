@@ -17,7 +17,7 @@ You can see [package information on Packagist.](https://packagist.org/packages/d
 
 # Features
 
-For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php). PHP > 5.3 required
+For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php). PHP > 5.3 required.
 
 ### Timestamp/datetime input formats support
 
@@ -62,8 +62,16 @@ All [date()](http://php.net/date) format options available and can be overrided 
 	echo $dater->clientDate(); // 2013-03-21
 	echo $dater->clientTime(); // 05:41:28
 	echo $dater->clientDateTime(); // 2013-03-21 05:41:28
-	
-### Timezones convertion
+
+### Native PHP DateTime class object init & formatting
+
+	$dateTime = $dater->initDateTime('2013-03-21 08:18:06', 'UTC', 'Europe/London');
+	$dateTime->modify('+10 years');
+	echo $dater->formatDateTime($dateTime, 'date'); // 03/21/2023
+	// or same thing in one line with Dater :)
+	echo $dater->modify('2013-03-21 08:18:06', 'date', 'UTC', 'Europe/London'); // 03/21/2023
+
+### Timezones conversion
 
 	$dater->setServerTimezone('Europe/Moscow');
 	$dater->setClientTimezone('Europe/London');
@@ -81,7 +89,7 @@ Based on JavaScript [jsTimezoneDetect](http://pellepim.bitbucket.org/jstz/) libr
 	
 ### Convert request datetime to server timezone
 
-Is usefult to auto-convert all client request datetime data to server timezone.
+Is useful to auto-convert all client request datetime data to server timezone.
 
 	$_GET = array('filter' => array('startsFrom' => '2012-12-12 12:00:00'));
 	$_POST = array('event' => array('starts' => '2012-12-12 12:00:00'));
@@ -91,7 +99,7 @@ Is usefult to auto-convert all client request datetime data to server timezone.
 
 ### Convert text template datetime timezone
 
-Is usefult to auto-convert all datetime in template date to client timezone. For example in Email template body.
+Is useful to auto-convert all datetime in template date to client timezone. For example in Email template body.
 	
 	$data = 'Timestamp format: 1363238564 (will not be handled)
 	Timestamp format: 1363238564[Y/m/d]
@@ -113,7 +121,7 @@ Will print:
 ### Convert output datetime to client timezone
 	
 	$daterDataHandler->enableOutputTimezoneHandler();
-	echo $data; // $data from previos example will print the same as in prevous example
+	echo $data; // $data from previous example will print the same as in prevous example
 	
 
 ## Recommended
