@@ -29,8 +29,9 @@ For all features using examples see [/example/index.php](https://github.com/barb
 ### Formats binding
 
 	$dater->format(time(), 'd/m/Y'); // 2013/03/14
-	$dater->addFormat('slashed_date', 'd/m/Y');
-	$dater->format(time(), 'slashed_date'); // 2013/03/14
+	$dater->addFormat('slashedDate', 'd/m/Y');
+	$dater->format(time(), 'slashedDate'); // 2013/03/14
+	$dater->slashedDate(time()); // 2013/03/14
 
 ### Format options
 
