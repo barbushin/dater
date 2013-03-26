@@ -1,5 +1,7 @@
 <?php
 
+namespace Dater;
+
 /**
  * Datetime formats & timezones handler
  *
@@ -34,9 +36,9 @@ class Dater {
 		self::ISO_DATETIME_FORMAT => 'Y-m-d H:i:s',
 	);
 
-	/** @var Dater_Locale */
+	/** @var Locale */
 	protected $locale;
-	/** @var DateTimezone[] */
+	/** @var \DateTimezone[] */
 	protected $timezonesObjects = array();
 	protected $clientTimezone;
 	protected $serverTimezone;
@@ -44,7 +46,7 @@ class Dater {
 	protected $formatOptionsPlaceholders = array();
 	protected $formatOptionsCallbacks = array();
 
-	public function __construct(Dater_Locale $locale, $serverTimezone = null, $clientTimezone = null) {
+	public function __construct(Locale $locale, $serverTimezone = null, $clientTimezone = null) {
 		$this->setLocale($locale);
 		$this->setServerTimezone($serverTimezone ? : date_default_timezone_get());
 		$this->setClientTimezone($clientTimezone ? : $this->serverTimezone);
@@ -52,7 +54,7 @@ class Dater {
 	}
 
 	/**
-	 * @return Dater_Locale
+	 * @return Locale
 	 */
 	public function getLocale() {
 		return $this->locale;
@@ -62,18 +64,18 @@ class Dater {
 	 * Get locale by language & country code. See available locales in /Dater/Locale/*
 	 * @param string $languageCode
 	 * @param null $countryCode
-	 * @throws Exception
+	 * @throws \Exception
 	 * @return
 	 */
 	public static function getLocaleByCode($languageCode, $countryCode = null) {
-		$class = 'Dater_Locale_' . ucfirst(strtolower($languageCode)) . ($countryCode ? ucfirst(strtolower($countryCode)) : '');
+		$class = 'Dater\Locale\\' . ucfirst(strtolower($languageCode)) . ($countryCode ? ucfirst(strtolower($countryCode)) : '');
 		if(!class_exists($class)) {
-			throw new Exception('Unknown locale code. Class "' . $class . '" not found.');
+			throw new \Exception('Unknown locale code. Class "' . $class . '" not found.');
 		}
 		return new $class();
 	}
 
-	public function setLocale(Dater_Locale $locale) {
+	public function setLocale(Locale $locale) {
 		foreach($locale::getFormats() as $alias => $format) {
 			$this->setFormat($alias, $format);
 		}
@@ -82,13 +84,13 @@ class Dater {
 
 	protected function initCustomFormatOptions() {
 		$dater = $this;
-		$this->addFormatOption('F', function (DateTime $dateTime) use ($dater) {
+		$this->addFormatOption('F', function (\DateTime $dateTime) use ($dater) {
 			return $dater->getLocale()->getMonth($dateTime->format('n') - 1);
 		});
-		$this->addFormatOption('l', function (DateTime $dateTime) use ($dater) {
+		$this->addFormatOption('l', function (\DateTime $dateTime) use ($dater) {
 			return $dater->getLocale()->getWeekDay($dateTime->format('N') - 1);
 		});
-		$this->addFormatOption('D', function (DateTime $dateTime) use ($dater) {
+		$this->addFormatOption('D', function (\DateTime $dateTime) use ($dater) {
 			return $dater->getLocale()->getWeekDayShort($dateTime->format('N') - 1);
 		});
 	}
@@ -114,10 +116,10 @@ class Dater {
 
 	public function addFormatOption($option, $callback) {
 		if(!is_callable($callback)) {
-			throw new Exception('Argument $callback is not callable');
+			throw new \Exception('Argument $callback is not callable');
 		}
 		if(array_search($option, $this->formatOptionsPlaceholders) !== false) {
-			throw new Exception('Option "' . $option . '" already added');
+			throw new \Exception('Option "' . $option . '" already added');
 		}
 		$this->formatOptionsNames[] = $option;
 		$this->formatOptionsPlaceholders[] = '~' . count($this->formatOptionsPlaceholders) . '~';
@@ -125,7 +127,7 @@ class Dater {
 	}
 
 	/**
-	 * Stash custom format options from standard PHP DateTime format parser
+	 * Stash custom format options from standard PHP \DateTime format parser
 	 * @param $format
 	 * @return bool Return true if there was any custom options in $format
 	 */
@@ -135,12 +137,12 @@ class Dater {
 	}
 
 	/**
-	 * Stash custom format options from standard PHP DateTime format parser
+	 * Stash custom format options from standard PHP \DateTime format parser
 	 * @param $format
-	 * @param DateTime $dateTime
+	 * @param \DateTime $dateTime
 	 * @return bool Return true if there was any custom options in $format
 	 */
-	protected function applyCustomFormatOptions(&$format, DateTime $dateTime) {
+	protected function applyCustomFormatOptions(&$format, \DateTime $dateTime) {
 		$formatOptionsCallbacks = $this->formatOptionsCallbacks;
 		$format = preg_replace_callback('/~(\d+)~/', function ($matches) use ($dateTime, $formatOptionsCallbacks) {
 			return call_user_func($formatOptionsCallbacks[$matches[1]], $dateTime);
@@ -158,7 +160,7 @@ class Dater {
 	}
 
 	/**
-	 * Init standard DateTime object configured to outputTimezone corresponding to inputTimezone
+	 * Init standard \DateTime object configured to outputTimezone corresponding to inputTimezone
 	 * @param null $dateTimeOrTimestamp
 	 * @param null $inputTimezone
 	 * @param null $outputTimezone
@@ -182,11 +184,11 @@ class Dater {
 		}
 
 		if($isTimeStamp) {
-			$dateTime = new DateTime();
+			$dateTime = new \DateTime();
 			$dateTime->setTimestamp($dateTimeOrTimestamp);
 		}
 		else {
-			$dateTime = new DateTime($dateTimeOrTimestamp, $inputTimezone ? $this->getTimezoneObject($inputTimezone) : null);
+			$dateTime = new \DateTime($dateTimeOrTimestamp, $inputTimezone ? $this->getTimezoneObject($inputTimezone) : null);
 		}
 
 		if(!$isDate && $outputTimezone && $outputTimezone != $inputTimezone) {
@@ -196,12 +198,12 @@ class Dater {
 	}
 
 	/**
-	 * Format DateTime object to http://php.net/date format or format name
-	 * @param DateTime $dateTime
+	 * Format \DateTime object to http://php.net/date format or format name
+	 * @param \DateTime $dateTime
 	 * @param $format
 	 * @return string
 	 */
-	public function formatDateTime(DateTime $dateTime, $format) {
+	public function formatDateTime(\DateTime $dateTime, $format) {
 		$format = $this->getFormat($format) ? : $format;
 		$isStashed = $this->stashCustomFormatOptions($format);
 		$result = $dateTime->format($format);
@@ -282,11 +284,11 @@ class Dater {
 	/**
 	 * Get DateTimezone object by timezone name
 	 * @param $timezone
-	 * @return DateTimezone
+	 * @return \DateTimezone
 	 */
 	protected function getTimezoneObject($timezone) {
 		if(!isset($this->timezonesObjects[$timezone])) {
-			$this->timezonesObjects[$timezone] = new DateTimezone($timezone);
+			$this->timezonesObjects[$timezone] = new \DateTimezone($timezone);
 		}
 		return $this->timezonesObjects[$timezone];
 	}
@@ -303,12 +305,12 @@ class Dater {
 	 * @param $formatAlias
 	 * @param array $dateTimeOrTimestampArg
 	 * @return string
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function __call($formatAlias, array $dateTimeOrTimestampArg) {
 		$formatAlias = $this->getFormat($formatAlias);
 		if(!$formatAlias) {
-			throw new Exception('There is no method or format with name "' . $formatAlias . '"');
+			throw new \Exception('There is no method or format with name "' . $formatAlias . '"');
 		}
 		return $this->format(reset($dateTimeOrTimestampArg), $formatAlias);
 	}

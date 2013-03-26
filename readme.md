@@ -21,7 +21,7 @@ For all features using examples see [/example/index.php](https://github.com/barb
 
 ### Timestamp/datetime input formats support
 
-	$dater = new Dater(Dater_Locale_En());
+	$dater = new Dater\Dater(Dater\Locale\En());
 	echo $dater->datetime();
 	echo $dater->datetime(time());
 	echo $dater->datetime(date('Y-m-d H:i:s'));
@@ -43,11 +43,11 @@ All [date()](http://php.net/date) format options available and can be overrided 
 
 ### Locales support
 
-	$dater->setLocale(new Dater_Locale_En()); // or you can use Dater::getLocaleByCode('ru')
+	$dater->setLocale(new Dater\Locale\En()); // or you can use Dater\Dater::getLocaleByCode('ru')
 	echo $dater->date(); // 03/21/2013
 	echo $dater->now('j F Y'); // 21 March 2013
 	
-	$dater->setLocale(new Dater_Locale_Ru());
+	$dater->setLocale(new Dater\Locale\Ru());
 	echo $dater->date(); // 21.03.2013
 	echo $dater->now('j F Y'); // 21 марта 2013
 	
@@ -68,7 +68,7 @@ All [date()](http://php.net/date) format options available and can be overrided 
 	$dateTime = $dater->initDateTime('2013-03-21 08:18:06', 'UTC', 'Europe/London');
 	$dateTime->modify('+10 years');
 	echo $dater->formatDateTime($dateTime, 'date'); // 03/21/2023
-	// or same thing in one line with Dater :)
+	// or same thing in one line with Dater\Dater :)
 	echo $dater->modify('2013-03-21 08:18:06', 'date', 'UTC', 'Europe/London'); // 03/21/2023
 
 ### Timezones conversion
@@ -83,7 +83,7 @@ All [date()](http://php.net/date) format options available and can be overrided 
 
 Based on JavaScript [jsTimezoneDetect](http://pellepim.bitbucket.org/jstz/) library with sending result to server by COOKIE.
 
-	$timezoneDetector = new Dater_TimezoneDetector();
+	$timezoneDetector = new Dater\TimezoneDetector();
 	echo '<html><head>' . $timezoneDetector->getHtmlJsCode() .'</head></html>'; // <script>...</script>
 	echo $timezoneDetector->getClientTimezone(); // Europe/London
 	
@@ -94,7 +94,7 @@ Is useful to auto-convert all client request datetime data to server timezone.
 	$_GET = array('filter' => array('startsFrom' => '2012-12-12 12:00:00'));
 	$_POST = array('event' => array('starts' => '2012-12-12 12:00:00'));
 	$_REQUEST = array_merge($_GET, $_POST);
-	$daterDataHandler = new Dater_DataHandler($dater);
+	$daterDataHandler = new Dater\DataHandler($dater);
 	$daterDataHandler->convertRequestDataToServerTimezone(); // all '2012-12-12 12:00:00' replaced to '2012-12-12 10:00:00'
 
 ### Convert text template datetime timezone
@@ -125,5 +125,6 @@ Will print:
 	
 
 ## Recommended
+
 * Google Chrome extension [PHP Console](http://goo.gl/b10YF)
 * Google Chrome extension [JavaScript Errors Notifier](http://goo.gl/kNix9)

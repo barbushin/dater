@@ -1,6 +1,9 @@
 <?php
 
-class Dater_Locale_Ru extends Dater_Locale {
+namespace Dater\Locale;
+use Dater\Dater;
+
+class Ru extends \Dater\Locale {
 
 	protected static $months = array('января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря');
 	protected static $weekDays = array('понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье');

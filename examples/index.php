@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__ . '/../Dater/__autoload.php');
+require_once(__DIR__ . '/autoload.php');
 
-$dater = new Dater(new Dater_Locale_En());
+$dater = new Dater\Dater(new Dater\Locale\En());
 
 echo '<pre>';
 echo '<h2>Datetime source type</h2>';
@@ -30,22 +30,22 @@ echo 'Set client timezone: ' . $dater->getClientTimezone() . PHP_EOL;
 echo 'Server datetime: ' . $dater->serverDateTime() . PHP_EOL;
 echo 'Client datetime: ' . $dater->isoDatetime() . PHP_EOL;
 
-echo '<h2>DateTime object init & format. Dater::modify() method</h2>';
+echo '<h2>DateTime object init & format. Dater\Dater::modify() method</h2>';
 
 $dateTime = $dater->initDateTime($weekAgoDateTime, 'Europe/London', 'UTC');
 $dateTime->modify('+10 years');
 echo 'Modified & formatted DateTime object: ' . $dater->formatDateTime($dateTime, 'date') . PHP_EOL;
-// or same thing in one line with Dater :)
-echo 'Modify & format using Dater::modify(): ' . $dater->modify($weekAgoDateTime, '+10 years', 'date', 'Europe/London', 'UTC');
+// or same thing in one line with Dater\Dater :)
+echo 'Modify & format using Dater\Dater::modify(): ' . $dater->modify($weekAgoDateTime, '+10 years', 'date', 'Europe/London', 'UTC');
 
 echo '<h2>Locales</h2>';
 
-$dater->setLocale(new Dater_Locale_En());
+$dater->setLocale(new Dater\Locale\En());
 echo 'Set locale: : ' . get_class($dater->getLocale()) . PHP_EOL;
 echo 'User date: ' . $dater->date() . PHP_EOL;
 echo 'User formatted date: ' . $dater->now('j F Y') . PHP_EOL . PHP_EOL;
 
-$dater->setLocale(Dater::getLocaleByCode('ru'));
+$dater->setLocale(Dater\Dater::getLocaleByCode('ru'));
 echo 'Set locale: : ' . get_class($dater->getLocale()) . PHP_EOL;
 echo 'User date: ' . $dater->date() . PHP_EOL;
 echo 'User formatted date: ' . $dater->now('j F Y') . PHP_EOL . PHP_EOL;
@@ -54,7 +54,7 @@ echo '<h2>Formats binding</h2>';
 
 echo 'User date: ' . $dater->date() . PHP_EOL;
 echo 'Set "date" format as "d F Y"' . PHP_EOL;
-$dater->setFormat(Dater::USER_DATE_FORMAT, 'd F Y');
+$dater->setFormat(Dater\Dater::USER_DATE_FORMAT, 'd F Y');
 echo 'User date: ' . $dater->date() . PHP_EOL;
 
 echo 'Set new "week_date" format as "d F, D"' . PHP_EOL;
@@ -85,7 +85,7 @@ print_r($_GET);
 print_r($_POST);
 print_r($_REQUEST);
 
-$daterDataHandler = new Dater_DataHandler($dater);
+$daterDataHandler = new Dater\DataHandler($dater);
 $daterDataHandler->convertRequestDataToServerTimezone();
 
 echo 'Server timezone converted request data: ' . PHP_EOL;
@@ -117,6 +117,6 @@ $daterDataHandler->enableOutputTimezoneHandler();
 echo $data;
 
 echo '<h2>Auto-detect client timezone by JavaScript</h2>';
-$timezoneDetector = new Dater_TimezoneDetector();
+$timezoneDetector = new Dater\TimezoneDetector();
 echo $timezoneDetector->getHtmlJsCode();
 echo 'Detected client timezone: ' . $timezoneDetector->getClientTimezone();

@@ -1,5 +1,7 @@
 <?php
 
+namespace Dater;
+
 /**
  * Handle format & timezone of request/response data
  *
@@ -8,7 +10,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause License
  * @copyright © Sergey Barbushin, 2013. Some rights reserved.
  */
-class Dater_DataHandler {
+class DataHandler {
 
 	/** @var Dater */
 	protected $dater;
@@ -25,7 +27,7 @@ class Dater_DataHandler {
 	}
 
 	/**
-	 * Output data datetime will be handled by ob_start() & Dater_TimezoneDetector::handleDataTimezone()
+	 * Output data datetime will be handled by ob_start() & Dater\TimezoneDetector::handleDataTimezone()
 	 */
 	public function enableOutputTimezoneHandler() {
 		if(!$this->outputTimezoneHandlerEnabled) {
@@ -50,7 +52,7 @@ class Dater_DataHandler {
 	 * @param string|null $outputTimezone Default value is Dater::$clientTimezone
 	 * @param string|null $inputTimezone Default value is Dater::$serverTimezone
 	 * @return mixed
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function convertTimezoneRecursively(&$arrayOrObject, $outputTimezone = null, $inputTimezone = null) {
 		if(is_object($arrayOrObject)) {
@@ -58,7 +60,7 @@ class Dater_DataHandler {
 			return $this->convertTimezoneRecursively($arrayVar, $inputTimezone, $outputTimezone);
 		}
 		elseif(!is_array($arrayOrObject)) {
-			throw new Exception('Wrong type of data argument');
+			throw new \Exception('Wrong type of data argument');
 		}
 		$dater = $this->dater;
 		array_walk_recursive($arrayOrObject, function (&$var) use ($dater, $inputTimezone, $outputTimezone) {

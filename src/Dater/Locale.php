@@ -1,5 +1,7 @@
 <?php
 
+namespace Dater;
+
 /**
  * Specify translations & formats for different locales
  *
@@ -8,7 +10,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause License
  * @copyright © Sergey Barbushin, 2013. Some rights reserved.
  */
-abstract class Dater_Locale {
+abstract class Locale {
 
 	/** @var array */
 	protected static $months;

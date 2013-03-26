@@ -1,5 +1,7 @@
 <?php
 
+namespace Dater;
+
 /**
  * Detect client timezone by JavaScript
  *
@@ -8,7 +10,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD 3-Clause License
  * @copyright © Sergey Barbushin, 2013. Some rights reserved.
  */
-class Dater_TimezoneDetector {
+class TimezoneDetector {
 
 	protected $cookieName;
 	protected $clientTimezone;

@@ -1,6 +1,9 @@
 <?php
 
-class Dater_Locale_En extends Dater_Locale {
+namespace Dater\Locale;
+use Dater\Dater;
+
+class En extends \Dater\Locale {
 
 	protected static $months = array('January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December');
 	protected static $weekDays = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
