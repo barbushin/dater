@@ -4,7 +4,7 @@ This library can be very helpful to standardize date-time formats in your projec
 
 # Install
 
-The recommended way to install Dater is [through composer](http://getcomposer.org).
+The recommended way to install Dater is through [Composer](http://getcomposer.org).
 You can see [package information on Packagist.](https://packagist.org/packages/dater/dater)
 
 ```JSON
@@ -29,8 +29,9 @@ For all features using examples see [/example/index.php](https://github.com/barb
 ### Formats binding
 
 	$dater->format(time(), 'd/m/Y'); // 2013/03/14
-	$dater->addFormat('slashed_date', 'd/m/Y');
-	$dater->format(time(), 'slashed_date'); // 2013/03/14
+	$dater->addFormat('slashedDate', 'd/m/Y');
+	$dater->format(time(), 'slashedDate'); // 2013/03/14
+	$dater->slashedDate(time()); // 2013/03/14
 
 ### Format options
 
