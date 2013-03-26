@@ -17,7 +17,7 @@ You can see [package information on Packagist.](https://packagist.org/packages/d
 
 # Features
 
-For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/example/index.php). PHP > 5.3 required.
+For all features using examples see [/example/index.php](https://github.com/barbushin/dater/blob/master/examples/index.php). PHP > 5.3 required.
 
 ### Timestamp/datetime input formats support
 
@@ -37,8 +37,8 @@ For all features using examples see [/example/index.php](https://github.com/barb
 
 All [date()](http://php.net/date) format options available and can be overrided or extended:
 
-	$dater->addFormatOption('ago', function (DateTime $dateTime) {
-		return floor((time() - $dateTime->getTimestamp()) / 86400) . ' days ago';
+	$dater->addFormatOption('ago', function (DateTime $datetime) {
+		return floor((time() - $datetime->getTimestamp()) / 86400) . ' days ago';
 	});
 	$dater->format(time() - 60*60*24*7, 'd F Y, ago'); // 14 March 2013, 7 days ago
 
@@ -62,13 +62,13 @@ All [date()](http://php.net/date) format options available and can be overrided 
 	echo $dater->isoDatetime(); // 2013-03-21 05:41:28 (client timezone)
 	echo $dater->serverDate(); // 2013-03-21 (server timezone)
 	echo $dater->serverTime(); // 09:41:28 (server timezone)
-	echo $dater->serverDateTime(); // 2013-03-21 09:41:28 (server timezone)
+	echo $dater->serverDatetime(); // 2013-03-21 09:41:28 (server timezone)
 
 ### Native PHP DateTime class object init & formatting
 
-	$dateTime = $dater->initDateTime('2013-03-21 08:18:06', 'UTC', 'Europe/London');
-	$dateTime->modify('+10 years');
-	echo $dater->formatDateTime($dateTime, 'date'); // 03/21/2023
+	$datetime = $dater->initDatetimeObject('2013-03-21 08:18:06', 'UTC', 'Europe/London');
+	$datetime->modify('+10 years');
+	echo $dater->formatDatetimeObject($datetime, 'date'); // 03/21/2023
 	// or same thing in one line with Dater\Dater :)
 	echo $dater->modify('2013-03-21 08:18:06', 'date', 'UTC', 'Europe/London'); // 03/21/2023
 
@@ -76,7 +76,7 @@ All [date()](http://php.net/date) format options available and can be overrided 
 
 	$dater->setServerTimezone('Europe/Moscow');
 	$dater->setClientTimezone('Europe/London');
-	echo $dater->serverDateTime(); // 2013-03-21 08:18:06
+	echo $dater->serverDatetime(); // 2013-03-21 08:18:06
 	echo $dater->isoDatetime(); // 2013-03-21 04:18:06
 	echo $dater->time(); // 04:18
 	

@@ -11,12 +11,12 @@ namespace Dater;
  * @copyright © Sergey Barbushin, 2013. Some rights reserved.
  *
  * All this methods works through Dater::__call method, mapped to format date with Dater::$formats[METHOD_NAME] format:
- * @method date($dateTimeOrTimestamp = null) Get date in Dater::$formats['date'] format, in client timezone
- * @method time($dateTimeOrTimestamp = null) Get date in Dater::$formats['time'] format, in client timezone
- * @method datetime($dateTimeOrTimestamp = null) Get date in Dater::$formats['datetime'] format, in client timezone
- * @method isoDate($dateTimeOrTimestamp = null) Get date in Dater::$formats['isoDate'] format, in client timezone
- * @method isoTime($dateTimeOrTimestamp = null) Get date in Dater::$formats['isoTime'] format, in client timezone
- * @method isoDatetime($dateTimeOrTimestamp = null) Get date in Dater::$formats['isoDatetime'] format, in client timezone
+ * @method date($datetimeOrTimestamp = null) Get date in Dater::$formats['date'] format, in client timezone
+ * @method time($datetimeOrTimestamp = null) Get date in Dater::$formats['time'] format, in client timezone
+ * @method datetime($datetimeOrTimestamp = null) Get date in Dater::$formats['datetime'] format, in client timezone
+ * @method isoDate($datetimeOrTimestamp = null) Get date in Dater::$formats['isoDate'] format, in client timezone
+ * @method isoTime($datetimeOrTimestamp = null) Get date in Dater::$formats['isoTime'] format, in client timezone
+ * @method isoDatetime($datetimeOrTimestamp = null) Get date in Dater::$formats['isoDatetime'] format, in client timezone
  */
 class Dater {
 
@@ -84,14 +84,14 @@ class Dater {
 
 	protected function initCustomFormatOptions() {
 		$dater = $this;
-		$this->addFormatOption('F', function (\DateTime $dateTime) use ($dater) {
-			return $dater->getLocale()->getMonth($dateTime->format('n') - 1);
+		$this->addFormatOption('F', function (\DateTime $datetime) use ($dater) {
+			return $dater->getLocale()->getMonth($datetime->format('n') - 1);
 		});
-		$this->addFormatOption('l', function (\DateTime $dateTime) use ($dater) {
-			return $dater->getLocale()->getWeekDay($dateTime->format('N') - 1);
+		$this->addFormatOption('l', function (\DateTime $datetime) use ($dater) {
+			return $dater->getLocale()->getWeekDay($datetime->format('N') - 1);
 		});
-		$this->addFormatOption('D', function (\DateTime $dateTime) use ($dater) {
-			return $dater->getLocale()->getWeekDayShort($dateTime->format('N') - 1);
+		$this->addFormatOption('D', function (\DateTime $datetime) use ($dater) {
+			return $dater->getLocale()->getWeekDayShort($datetime->format('N') - 1);
 		});
 	}
 
@@ -139,13 +139,13 @@ class Dater {
 	/**
 	 * Stash custom format options from standard PHP \DateTime format parser
 	 * @param $format
-	 * @param \DateTime $dateTime
+	 * @param \DateTime $datetime
 	 * @return bool Return true if there was any custom options in $format
 	 */
-	protected function applyCustomFormatOptions(&$format, \DateTime $dateTime) {
+	protected function applyCustomFormatOptions(&$format, \DateTime $datetime) {
 		$formatOptionsCallbacks = $this->formatOptionsCallbacks;
-		$format = preg_replace_callback('/~(\d+)~/', function ($matches) use ($dateTime, $formatOptionsCallbacks) {
-			return call_user_func($formatOptionsCallbacks[$matches[1]], $dateTime);
+		$format = preg_replace_callback('/~(\d+)~/', function ($matches) use ($datetime, $formatOptionsCallbacks) {
+			return call_user_func($formatOptionsCallbacks[$matches[1]], $datetime);
 		}, $format);
 	}
 
@@ -161,12 +161,12 @@ class Dater {
 
 	/**
 	 * Init standard \DateTime object configured to outputTimezone corresponding to inputTimezone
-	 * @param null $dateTimeOrTimestamp
+	 * @param null $datetimeOrTimestamp
 	 * @param null $inputTimezone
 	 * @param null $outputTimezone
 	 * @return \DateTime
 	 */
-	public function initDateTime($dateTimeOrTimestamp = null, $inputTimezone = null, $outputTimezone = null) {
+	public function initDatetimeObject($datetimeOrTimestamp = null, $inputTimezone = null, $outputTimezone = null) {
 		if(!$inputTimezone) {
 			$inputTimezone = $this->serverTimezone;
 		}
@@ -174,8 +174,8 @@ class Dater {
 			$outputTimezone = $this->clientTimezone;
 		}
 
-		if(strlen($dateTimeOrTimestamp) == 10) {
-			$isTimeStamp = is_numeric($dateTimeOrTimestamp);
+		if(strlen($datetimeOrTimestamp) == 10) {
+			$isTimeStamp = is_numeric($datetimeOrTimestamp);
 			$isDate = !$isTimeStamp;
 		}
 		else {
@@ -184,91 +184,91 @@ class Dater {
 		}
 
 		if($isTimeStamp) {
-			$dateTime = new \DateTime();
-			$dateTime->setTimestamp($dateTimeOrTimestamp);
+			$datetime = new \DateTime();
+			$datetime->setTimestamp($datetimeOrTimestamp);
 		}
 		else {
-			$dateTime = new \DateTime($dateTimeOrTimestamp, $inputTimezone ? $this->getTimezoneObject($inputTimezone) : null);
+			$datetime = new \DateTime($datetimeOrTimestamp, $inputTimezone ? $this->getTimezoneObject($inputTimezone) : null);
 		}
 
 		if(!$isDate && $outputTimezone && $outputTimezone != $inputTimezone) {
-			$dateTime->setTimezone($this->getTimezoneObject($outputTimezone));
+			$datetime->setTimezone($this->getTimezoneObject($outputTimezone));
 		}
-		return $dateTime;
+		return $datetime;
 	}
 
 	/**
 	 * Format \DateTime object to http://php.net/date format or format name
-	 * @param \DateTime $dateTime
+	 * @param \DateTime $datetime
 	 * @param $format
 	 * @return string
 	 */
-	public function formatDateTime(\DateTime $dateTime, $format) {
+	public function formatDatetimeObject(\DateTime $datetime, $format) {
 		$format = $this->getFormat($format) ? : $format;
 		$isStashed = $this->stashCustomFormatOptions($format);
-		$result = $dateTime->format($format);
+		$result = $datetime->format($format);
 		if($isStashed) {
-			$this->applyCustomFormatOptions($result, $dateTime);
+			$this->applyCustomFormatOptions($result, $datetime);
 		}
 		return $result;
 	}
 
 	/**
 	 * Format date/datetime/timestamp to specified format with timezone converting
-	 * @param string|int|null $dateTimeOrTimestamp Default value current timestamp
+	 * @param string|int|null $datetimeOrTimestamp Default value current timestamp
 	 * @param string|null $format http://php.net/date format or format name. Default value is current
 	 * @param string|null $outputTimezone Default value is Dater::$clientTimezone
 	 * @param string|null $inputTimezone Default value is Dater::$serverTimezone
 	 * @return string
 	 */
-	public function format($dateTimeOrTimestamp, $format, $outputTimezone = null, $inputTimezone = null) {
-		$dateTime = $this->initDateTime($dateTimeOrTimestamp, $inputTimezone, $outputTimezone);
-		$result = $this->formatDateTime($dateTime, $format);
+	public function format($datetimeOrTimestamp, $format, $outputTimezone = null, $inputTimezone = null) {
+		$datetime = $this->initDatetimeObject($datetimeOrTimestamp, $inputTimezone, $outputTimezone);
+		$result = $this->formatDatetimeObject($datetime, $format);
 		return $result;
 	}
 
 	/**
-	 * @param $dateTimeOrTimestamp
+	 * @param $datetimeOrTimestamp
 	 * @param string $modify Modification string as in http://php.net/date_modify
 	 * @param string|null $format http://php.net/date format or format name. Default value is Dater::ISO_DATETIME_FORMAT
 	 * @param string|null $outputTimezone Default value is Dater::$serverTimezone
 	 * @param string|null $inputTimezone Default value is Dater::$serverTimezone
 	 * @return string
 	 */
-	public function modify($dateTimeOrTimestamp, $modify, $format = null, $outputTimezone = null, $inputTimezone = null) {
+	public function modify($datetimeOrTimestamp, $modify, $format = null, $outputTimezone = null, $inputTimezone = null) {
 		$format = $format ? : self::ISO_DATETIME_FORMAT;
 		$outputTimezone = $outputTimezone ? : $this->serverTimezone;
 		$inputTimezone = $inputTimezone ? : $this->serverTimezone;
-		$dateTime = $this->initDateTime($dateTimeOrTimestamp, $inputTimezone, $outputTimezone);
-		$dateTime->modify($modify);
-		return $this->formatDateTime($dateTime, $format);
+		$datetime = $this->initDatetimeObject($datetimeOrTimestamp, $inputTimezone, $outputTimezone);
+		$datetime->modify($modify);
+		return $this->formatDatetimeObject($datetime, $format);
 	}
 
 	/**
 	 * Get date in YYYY-MM-DD format, in server timezone
-	 * @param string|int|null $serverDateTimeOrTimestamp
+	 * @param string|int|null $serverDatetimeOrTimestamp
 	 * @return string
 	 */
-	public function serverDate($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::ISO_DATE_FORMAT, $this->serverTimezone);
+	public function serverDate($serverDatetimeOrTimestamp = null) {
+		return $this->format($serverDatetimeOrTimestamp, self::ISO_DATE_FORMAT, $this->serverTimezone);
 	}
 
 	/**
 	 * Get date in HH-II-SS format, in server timezone
-	 * @param string|int|null $serverDateTimeOrTimestamp
+	 * @param string|int|null $serverDatetimeOrTimestamp
 	 * @return string
 	 */
-	public function serverTime($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::ISO_TIME_FORMAT, $this->serverTimezone);
+	public function serverTime($serverDatetimeOrTimestamp = null) {
+		return $this->format($serverDatetimeOrTimestamp, self::ISO_TIME_FORMAT, $this->serverTimezone);
 	}
 
 	/**
 	 * Get datetime in YYYY-MM-DD HH:II:SS format, in server timezone
-	 * @param null $serverDateTimeOrTimestamp
+	 * @param null $serverDatetimeOrTimestamp
 	 * @return string
 	 */
-	public function serverDateTime($serverDateTimeOrTimestamp = null) {
-		return $this->format($serverDateTimeOrTimestamp, self::ISO_DATETIME_FORMAT, $this->serverTimezone);
+	public function serverDatetime($serverDatetimeOrTimestamp = null) {
+		return $this->format($serverDatetimeOrTimestamp, self::ISO_DATETIME_FORMAT, $this->serverTimezone);
 	}
 
 	public function setFormat($alias, $format) {
@@ -282,7 +282,7 @@ class Dater {
 	}
 
 	/**
-	 * Get DateTimezone object by timezone name
+	 * Get Datetimezone object by timezone name
 	 * @param $timezone
 	 * @return \DateTimezone
 	 */
@@ -294,24 +294,24 @@ class Dater {
 	}
 
 	/**
-	 * Magic call of $dater->format($dateTimeOrTimestamp, $formatAlias).
+	 * Magic call of $dater->format($datetimeOrTimestamp, $formatAlias).
 	 *
 	 * Example:
 	 *   $dater->addFormat('shortDate', 'd/m')
 	 *   echo $dater->shortDate(time());
 	 * To annotate available formats-methods just add to Dater class annotations like:
-	 *   @method shortDate($dateTimeOrTimestamp = null)
+	 *   @method shortDate($datetimeOrTimestamp = null)
 	 *
 	 * @param $formatAlias
-	 * @param array $dateTimeOrTimestampArg
+	 * @param array $datetimeOrTimestampArg
 	 * @return string
 	 * @throws \Exception
 	 */
-	public function __call($formatAlias, array $dateTimeOrTimestampArg) {
+	public function __call($formatAlias, array $datetimeOrTimestampArg) {
 		$formatAlias = $this->getFormat($formatAlias);
 		if(!$formatAlias) {
 			throw new \Exception('There is no method or format with name "' . $formatAlias . '"');
 		}
-		return $this->format(reset($dateTimeOrTimestampArg), $formatAlias);
+		return $this->format(reset($datetimeOrTimestampArg), $formatAlias);
 	}
 }

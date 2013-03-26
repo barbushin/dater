@@ -5,12 +5,12 @@ require_once(__DIR__ . '/autoload.php');
 $dater = new Dater\Dater(new Dater\Locale\En());
 
 echo '<pre>';
-echo '<h2>Datetime source type</h2>';
+echo '<h2>Datetime source types</h2>';
 $weekAgoTimestamp = time() - 60 * 60 * 24 * 7;
-$weekAgoDateTime = date('Y-m-d H:i:s', $weekAgoTimestamp);
-echo 'Server datetime (default = current): ' . $dater->serverDateTime() . PHP_EOL;
-echo 'Server datetime by week ago timestamp: ' . $dater->serverDateTime($weekAgoTimestamp) . PHP_EOL;
-echo 'Server datetime by week ago YYYY-MM-DD HH:II:SS: ' . $dater->serverDateTime($weekAgoDateTime) . PHP_EOL;
+$weekAgoDatetime = date('Y-m-d H:i:s', $weekAgoTimestamp);
+echo 'Server datetime (default = current): ' . $dater->serverDatetime() . PHP_EOL;
+echo 'Server datetime by week ago timestamp: ' . $dater->serverDatetime($weekAgoTimestamp) . PHP_EOL;
+echo 'Server datetime by week ago YYYY-MM-DD HH:II:SS: ' . $dater->serverDatetime($weekAgoDatetime) . PHP_EOL;
 
 echo '<h2>Timezone and datetime in server format</h2>';
 
@@ -22,21 +22,21 @@ echo 'Server date: ' . $dater->serverDate() . PHP_EOL;
 echo 'Client date: ' . $dater->isoDate() . PHP_EOL;
 echo 'Server time: ' . $dater->serverTime() . PHP_EOL;
 echo 'Client time: ' . $dater->isoTime() . PHP_EOL;
-echo 'Server datetime: ' . $dater->serverDateTime() . PHP_EOL;
+echo 'Server datetime: ' . $dater->serverDatetime() . PHP_EOL;
 echo 'Client datetime: ' . $dater->isoDatetime() . PHP_EOL;
 
 $dater->setClientTimezone('Europe/Minsk');
 echo 'Set client timezone: ' . $dater->getClientTimezone() . PHP_EOL;
-echo 'Server datetime: ' . $dater->serverDateTime() . PHP_EOL;
+echo 'Server datetime: ' . $dater->serverDatetime() . PHP_EOL;
 echo 'Client datetime: ' . $dater->isoDatetime() . PHP_EOL;
 
 echo '<h2>DateTime object init & format. Dater\Dater::modify() method</h2>';
 
-$dateTime = $dater->initDateTime($weekAgoDateTime, 'Europe/London', 'UTC');
-$dateTime->modify('+10 years');
-echo 'Modified & formatted DateTime object: ' . $dater->formatDateTime($dateTime, 'date') . PHP_EOL;
+$datetime = $dater->initDatetimeObject($weekAgoDatetime, 'Europe/London', 'UTC');
+$datetime->modify('+10 years');
+echo 'Modified & formatted DateTime object: ' . $dater->formatDatetimeObject($datetime, 'date') . PHP_EOL;
 // or same thing in one line with Dater\Dater :)
-echo 'Modify & format using Dater\Dater::modify(): ' . $dater->modify($weekAgoDateTime, '+10 years', 'date', 'Europe/London', 'UTC');
+echo 'Modify & format using Dater\Dater::modify(): ' . $dater->modify($weekAgoDatetime, '+10 years', 'date', 'Europe/London', 'UTC');
 
 echo '<h2>Locales</h2>';
 
@@ -59,25 +59,25 @@ echo 'User date: ' . $dater->date() . PHP_EOL;
 
 echo 'Set new "week_date" format as "d F, D"' . PHP_EOL;
 $dater->setFormat('week_date', 'd F, D');
-echo 'User week_date: ' . $dater->format($weekAgoDateTime, 'week_date') . PHP_EOL;
+echo 'User week_date: ' . $dater->format($weekAgoDatetime, 'week_date') . PHP_EOL;
 
 echo '<h2>Custom format options</h2>';
 
 echo 'Add new format option "ago" that will return date days left' . PHP_EOL;
-$dater->addFormatOption('ago', function (DateTime $dateTime) {
-	return floor((time() - $dateTime->getTimestamp()) / 86400) . ' days ago';
+$dater->addFormatOption('ago', function (DateTime $datetime) {
+	return floor((time() - $datetime->getTimestamp()) / 86400) . ' days ago';
 });
-echo 'User week ago date in format "d F Y, ago": ' . $dater->format($weekAgoDateTime, 'd F Y, ago') . PHP_EOL;
+echo 'User week ago date in format "d F Y, ago": ' . $dater->format($weekAgoDatetime, 'd F Y, ago') . PHP_EOL;
 echo 'So again, lets bind "d F Y, ago" format to alias "week_date_ago"' . PHP_EOL;
 $dater->setFormat('week_date_ago', 'd F Y, ago');
-echo 'User week ago date in format "week_date_ago": ' . $dater->format($weekAgoDateTime, 'week_date_ago') . PHP_EOL;
+echo 'User week ago date in format "week_date_ago": ' . $dater->format($weekAgoDatetime, 'week_date_ago') . PHP_EOL;
 
 echo '<h2>Convert request datetime to server timezone</h2>';
 echo 'Server timezone: ' . $dater->getServerTimezone() . PHP_EOL;
 echo 'Client timezone: ' . $dater->getClientTimezone() . PHP_EOL;
 
-$_GET = array('filter' => array('startsFrom' => $weekAgoDateTime));
-$_POST = array('event' => array('starts' => $weekAgoDateTime));
+$_GET = array('filter' => array('startsFrom' => $weekAgoDatetime));
+$_POST = array('event' => array('starts' => $weekAgoDatetime));
 $_REQUEST = array_merge($_GET, $_POST);
 
 echo 'Client original request data: ' . PHP_EOL;
@@ -98,9 +98,9 @@ echo '<h2>Convert text template datetime timezone</h2>';
 $data = 'Timestamp format: ' . $weekAgoTimestamp . ' (will not be handled)
 Timestamp format: ' . $weekAgoTimestamp . '[Y/m/d]
 Timestamp format: ' . $weekAgoTimestamp . '[datetime]
-Server datetime format: ' . $weekAgoDateTime . '[Y/m/d]
-Server datetime format: ' . $weekAgoDateTime . '[time]
-Server datetime format: ' . $weekAgoDateTime;
+Server datetime format: ' . $weekAgoDatetime . '[Y/m/d]
+Server datetime format: ' . $weekAgoDatetime . '[time]
+Server datetime format: ' . $weekAgoDatetime;
 
 echo '<h3>Original data</h3>';
 echo $data;
