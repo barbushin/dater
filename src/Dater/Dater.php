@@ -275,10 +275,21 @@ class Dater {
 		$this->formats[$alias] = $format;
 	}
 
-	protected function getFormat($alias) {
+	/**
+	 * @param $alias
+	 * @return string|null
+	 */
+	public function getFormat($alias) {
 		if(isset($this->formats[$alias])) {
 			return $this->formats[$alias];
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getFormats() {
+		return $this->formats;
 	}
 
 	/**
