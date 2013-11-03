@@ -2,6 +2,8 @@
 
 This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones. 
 
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/barbushin/dater/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 # Install
 
 The recommended way to install Dater is through [Composer](http://getcomposer.org).
