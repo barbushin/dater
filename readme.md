@@ -1,8 +1,6 @@
 # About
 
-This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones. 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/barbushin/dater/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones.
 
 # Install
 
@@ -11,7 +9,7 @@ You can see [package information on Packagist.](https://packagist.org/packages/d
 
 	{
 		"require": {
-			"dater/dater": "dev-master"
+			"dater/dater": "1.*"
 		}
 	}
 
