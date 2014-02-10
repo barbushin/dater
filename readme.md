@@ -9,7 +9,7 @@ You can see [package information on Packagist.](https://packagist.org/packages/d
 
 	{
 		"require": {
-			"dater/dater": "1.*"
+			"dater/dater": "2.*"
 		}
 	}
 
