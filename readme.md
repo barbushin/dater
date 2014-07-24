@@ -66,9 +66,9 @@ All [date()](http://php.net/date) format options available and can be overrided 
 
 	$datetime = $dater->initDatetimeObject('2013-03-21 08:18:06', 'UTC', 'Europe/London');
 	$datetime->modify('+10 years');
-	echo $dater->formatDatetimeObject($datetime, 'date'); // 03/21/2023
+	echo $dater->formatDatetimeObject($datetime, 'date'); // 03/21/2013
 	// or same thing in one line with Dater\Dater :)
-	echo $dater->modify('2013-03-21 08:18:06', 'date', 'UTC', 'Europe/London'); // 03/21/2023
+	echo $dater->modify('2013-03-21 08:18:06', 'date', 'UTC', 'Europe/London'); // 03/21/2013
 
 ### Timezones conversion
 
