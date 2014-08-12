@@ -308,7 +308,7 @@ class Dater {
 	 * Magic call of $dater->format($datetimeOrTimestamp, $formatAlias).
 	 *
 	 * Example:
-	 *   $dater->addFormat('shortDate', 'd/m')
+	 *   $dater->setFormat('shortDate', 'd/m')
 	 *   echo $dater->shortDate(time());
 	 * To annotate available formats-methods just add to Dater class annotations like:
 	 *   @method shortDate($datetimeOrTimestamp = null)
