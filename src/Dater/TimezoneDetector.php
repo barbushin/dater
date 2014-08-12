@@ -42,7 +42,7 @@ class TimezoneDetector {
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js"></script>
 <script type="text/javascript">
 	function refreshTimezoneCookie() {
-			var lastTimezone = (m = new RegExp(";\\\\s*' . $this->cookieName . '=(.*?);", "g").exec(";" + document.cookie + ";")) ? m[1] : null;
+			var lastTimezone = (m = new RegExp(";?\\\\s*' . $this->cookieName . '=(.*?);", "g").exec(";" + document.cookie + ";")) ? m[1] : null;
 			var currentTimezone = jstz.determine().name();
 			if(!lastTimezone || (lastTimezone != currentTimezone)) {
 				document.cookie = "' . $this->cookieName . '=" + jstz.determine().name() + "; path=/";' .
