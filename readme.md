@@ -19,7 +19,7 @@ For all features using examples see [/example/index.php](https://github.com/barb
 
 ### Timestamp/datetime input formats support
 
-	$dater = new Dater\Dater(Dater\Locale\En());
+	$dater = new Dater\Dater(new Dater\Locale\En());
 	echo $dater->datetime();
 	echo $dater->datetime(time());
 	echo $dater->datetime(date('Y-m-d H:i:s'));
