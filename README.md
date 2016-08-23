@@ -1,4 +1,9 @@
-# About
+# Dater
+
+[![Author](http://img.shields.io/badge/author-@barbushin-blue.svg?style=flat-square)](https://www.linkedin.com/in/barbushin)
+[![GitHub release](https://img.shields.io/github/release/barbushin/dater.svg?maxAge=2592000&style=flat-square)](https://packagist.org/packages/dater/dater)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![Packagist](https://img.shields.io/packagist/dt/dater/dater.svg?maxAge=86400&style=flat-square)](https://packagist.org/packages/dater/dater)
 
 This library can be very helpful to standardize date-time formats in your project & get done easy with different clients timezones.
 
@@ -9,7 +14,7 @@ You can see [package information on Packagist.](https://packagist.org/packages/d
 
 	{
 		"require": {
-			"dater/dater": "2.*"
+			"dater/dater": "^2.0"
 		}
 	}
 
