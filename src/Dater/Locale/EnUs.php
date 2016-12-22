@@ -12,7 +12,7 @@ class EnUs extends \Dater\Locale {
 	// Referring to https://en.wikipedia.org/wiki/Date_format_by_country
 	protected static $formats = array(
 		Dater::USER_DATE_FORMAT => 'm/d/Y',
-		Dater::USER_TIME_FORMAT => 'G:i',
-		Dater::USER_DATETIME_FORMAT => 'm/d/Y G:i',
+		Dater::USER_TIME_FORMAT => 'H:i',
+		Dater::USER_DATETIME_FORMAT => 'm/d/Y H:i',
 	);
 }
