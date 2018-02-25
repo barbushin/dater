@@ -18,10 +18,5 @@
 	"autoload": {
 		"psr-0": {"Dater": "src/"}
 	},
-	"minimum-stability": "dev",
-	"extra": {
-		"branch-alias": {
-			"dev-master": "2.0.x-dev"
-		}
-	}
+	"minimum-stability": "dev"
 }
